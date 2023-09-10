@@ -40,11 +40,16 @@ export const App = () => {
   const deleteContact = (contactId) => {
     setContacts(prevState => prevState.filter(contact => contact.id !== contactId))
   }
-  
+
   const nameFilter = (contactName) => {
-    setFilter(contactName)
-    return contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase))
+    setFilter(contactName);
   }
+
+  const getVisibleContacts = () => {
+    return contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLocaleLowerCase()))
+    
+  }
+  
   // put contacts to local storage
   useEffect(()=> {
       localStorage.setItem(KEY, JSON.stringify(contacts))
@@ -55,8 +60,8 @@ export const App = () => {
         setHaveContacts(true)
       }
   }, [contacts])
-
-  return(
+  
+   return(
     <>
       <Section>
         <AddContactForm addContact = {addContact}/>
@@ -67,7 +72,7 @@ export const App = () => {
         ?(
         <>
             <ContactsFilter filter = {filter} onNameFilter = {nameFilter}/>
-            <ContactsList contacts = {contacts} onDelete = {deleteContact}/>
+            <ContactsList contacts = {getVisibleContacts()} onDelete = {deleteContact}/>
           </>
           ):(
             <>
