@@ -78,6 +78,6 @@ export const App = () => {
             <>
               <p>You don't have any contacts. Create a new one!</p>
             </>
-          )};
+          )}
       </Section>
     </>)}
